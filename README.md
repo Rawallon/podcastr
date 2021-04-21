@@ -30,12 +30,6 @@ Este projeto foi desenvolvido utilizando as seguintes tecnologias:
 
 - [JSON Server](https://github.com/typicode/json-server)
 
-# Preview
-
-<a title="Deployed with Vercel" href="https://#-rawallon.vercel.app/">
-<img alt="Deployed with Vercel" src="https://img.shields.io/badge/Deployed%20with%20Vercel-%230070f3?style=plastic&logo=vercel&logoColor=white" width="200px" />
-</a>
-
 # How to run
 
 Clone the project and access the folder
@@ -47,11 +41,14 @@ $ git clone https://github.com/Rawallon/podcastr.git && cd podcastr
 # Install the dependencies
 $ npm install
 
-# Run in development mode
+# Run Next in development mode
 $ npm dev
 
+# Run the mock backend (JSON Server)
+$ npm server
+
 # Note: Its possible to build it on your local machine
-# and then use output of it in a low cost (or even free) host
+# and then use output (./out) of it in a low cost (or even free) host
 $ npm build
 
 ```
