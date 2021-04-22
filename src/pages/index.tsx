@@ -7,6 +7,8 @@ import styles from '../styles/home.module.scss';
 import ptBR from 'date-fns/locale/pt-BR';
 import { api } from '../utils/api';
 import { convertDurationToTimeString } from '../utils/convertDurationToTimeString';
+import { PlayerCtx } from '../context/PlayerContext';
+import { useContext } from 'react';
 
 type Episode = {
   id: string;
@@ -24,6 +26,7 @@ type HomeProps = {
 };
 
 export default function Home({ latestEpisodes, allEpisodes }: HomeProps) {
+  const { play } = useContext(PlayerCtx);
   return (
     <div className={styles.homepage}>
       <section className={styles.latestEpisodes}>
@@ -49,7 +52,7 @@ export default function Home({ latestEpisodes, allEpisodes }: HomeProps) {
                 <span>{episode.durationAsString}</span>
               </div>
 
-              <button>
+              <button onClick={() => play(episode)}>
                 <img src="/play-green.svg" alt="Tocar episódio" />
               </button>
             </li>
@@ -90,7 +93,7 @@ export default function Home({ latestEpisodes, allEpisodes }: HomeProps) {
                 <td style={{ width: 100 }}>{episode.publishedAt}</td>
                 <td>{episode.durationAsString}</td>
                 <td>
-                  <button type="button">
+                  <button type="button" onClick={() => play(episode)}>
                     <img src="/play-green.svg" alt="Tocar episódio" />
                   </button>
                 </td>

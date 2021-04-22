@@ -19,6 +19,47 @@ Esta projeto foi desenvolvido durante o evento NLW#05 - Trilha de React da <a hr
 <img src="./.readme/first.png" width="400px">
 <img src="./.readme/second.png" width="400px">
 
+# Conteudo técnico apresentado
+
+## Dia 01
+
+- [x] Ambiente de desenvolvimento
+- [x] Fluxo de uma API
+- [x] Conceitos basicos do React
+  - [x] Component
+  - [x] Propiedade
+  - [x] Estado
+- [x] SEO com React
+- [x] Iniciando com Next.js
+  - [x] Server-side rendering
+  - [x] Static site generation
+
+## Dia 02
+
+- [x] Typescript
+- [x] Estilização
+- [x] Componentes: Header e Player
+- [x] Criando mock back-end (JSON Server)
+- [x] Consumindo APIs com Next
+- [x] SPA vs SSR vs SSG
+- [x] Gerando pagina estatica
+- [x] Criando build do projeto
+
+## Dia 03
+
+- [x] Criação da home
+- [x] Rotamento no Next
+- [x] Criação da pagina de episodios (através de slug)
+- [x] Aprofundamento em páginas estáticas e dinámicas
+
+## Dia 04
+
+- [x] Aprofundamento e utilização da Context API
+- [x] Implementação de <audio>
+- [x] Criação da funcionalidade de tocar podcast
+- [x] Utilização de refs no React
+- [x] Utilização de eventos para controle da interface
+
 # Tecnologias
 
 Este projeto foi desenvolvido utilizando as seguintes tecnologias:
@@ -30,25 +71,24 @@ Este projeto foi desenvolvido utilizando as seguintes tecnologias:
 
 - [JSON Server](https://github.com/typicode/json-server)
 
-# How to run
+# Como rodar
 
 Clone the project and access the folder
 
 ```bash
-# Clone repo
+# Clona o repo
 $ git clone https://github.com/Rawallon/podcastr.git && cd podcastr
 
-# Install the dependencies
+# Instala as dependencias
 $ npm install
 
-# Run Next in development mode
+# Roda o projeto Next em modo desenvolvimento
 $ npm dev
 
-# Run the mock backend (JSON Server)
+# Roda o back-end falso
 $ npm server
 
-# Note: Its possible to build it on your local machine
-# and then use output (./out) of it in a low cost (or even free) host
-$ npm build
+# Nota: É possivel fazer a build e utilizar o output em um host barato
+# $ npm build
 
 ```
