@@ -131,3 +131,22 @@
     }
   }
 }
+
+.volume{
+  position: relative;
+
+  .seek{
+    position: absolute !important;
+    top: -100px;
+    left: 25%;
+    height: 100px;
+    display: flex;
+    transition: all 2s;
+  }
+  .visible{
+    display: none;
+  }
+  .hidden{
+    display: block;
+  }
+}

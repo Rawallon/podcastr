@@ -11,6 +11,19 @@ import styles from './styles.module.scss';
 export default function Player() {
   const audioRef = useRef<HTMLAudioElement>(null);
   const [progress, setProgress] = useState(0);
+  const [isVolumeOpen, setIsVolumeOpen] = useState(false);
+  const [audioVolume, setAudioVolume] = useState(50);
+  const [muteAudioVolume, setMuteAudioVolume] = useState(0);
+  const [isMuted, setIsMuted] = useState(false);
+
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      const storageVolume = localStorage.getItem('audioVolume');
+      if (storageVolume) {
+        setAudioVolume(Number(storageVolume));
+      }
+    }
+  }, []);
 
   const {
     episodeList,
@@ -60,6 +73,21 @@ export default function Player() {
   function handleSeek(amount) {
     audioRef.current.currentTime = amount;
     setProgress(amount);
+  }
+
+  function handleChangeVolume(amount) {
+    localStorage.setItem('audioVolume', amount);
+    audioRef.current.volume = amount / 100;
+    setAudioVolume(amount);
+  }
+  function handleMute() {
+    if (!isMuted) {
+      setMuteAudioVolume(audioVolume);
+      audioRef.current.volume = 0;
+      setAudioVolume(0);
+    }
+
+    handleChangeVolume(muteAudioVolume);
   }
   return (
     <div className={styles.playerContainer}>
@@ -111,7 +139,6 @@ export default function Player() {
         {episode && (
           <audio
             src={episode.url}
-            autoPlay
             loop={isLooping}
             ref={audioRef}
             onEnded={handleEpisodeEnd}
@@ -163,6 +190,35 @@ export default function Player() {
             className={isLooping ? styles.isActive : ''}>
             <img src="/repeat.svg" alt="Repetir" />
           </button>
+
+          <div
+            className={styles.volume}
+            onMouseEnter={() => setIsVolumeOpen(true)}
+            onMouseLeave={() => setIsVolumeOpen(false)}>
+            <Slider
+              vertical
+              className={`${styles.seek} ${
+                !isVolumeOpen ? styles.visible : styles.hidden
+              }`}
+              max={100}
+              value={audioVolume}
+              onChange={handleChangeVolume}
+              trackStyle={{ backgroundColor: '#04d361', width: '50%' }}
+              railStyle={{ backgroundColor: '#9f75ff', width: '50%' }}
+              handleStyle={{
+                backgroundColor: '#04d361',
+                borderWidth: 4,
+                left: '50%',
+              }}
+            />
+            <button
+              type="button"
+              disabled={!episode}
+              onClick={() => handleMute()}
+              className={isLooping ? styles.isActive : ''}>
+              <img src="/volume.svg" alt="Repetir" />
+            </button>
+          </div>
         </div>
       </footer>
     </div>
