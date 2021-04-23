@@ -19,6 +19,12 @@ Esta projeto foi desenvolvido durante o evento NLW#05 - Trilha de React da <a hr
 <img src="./.readme/first.png" width="400px">
 <img src="./.readme/second.png" width="400px">
 
+# Live Demo
+
+<a title="Deployed with vercel" href="https://podcastr-rawallon.vercel.app/">
+<img alt="Deployed with vercel" src="https://img.shields.io/badge/Deployed%20with%20Vercel-%230070f3?style=plastic&logo=vercel&logoColor=white" width="200px" />
+</a>
+
 # Conteudo técnico apresentado
 
 ## Dia 01
@@ -60,6 +66,15 @@ Esta projeto foi desenvolvido durante o evento NLW#05 - Trilha de React da <a hr
 - [x] Utilização de refs no React
 - [x] Utilização de eventos para controle da interface
 
+## Dia 05
+
+- [x] Re-estruturação de codigo
+- [x] Finalização de controles do player
+  - [x] Próximo e anterior
+  - [x] Loop
+  - [x] Shuffle
+  - [x] Seek ("barrinha de tempo")
+
 # Tecnologias
 
 Este projeto foi desenvolvido utilizando as seguintes tecnologias:
@@ -68,8 +83,6 @@ Este projeto foi desenvolvido utilizando as seguintes tecnologias:
 - [Sass](https://sass-lang.com/)
 - [React](https://reactjs.org/)
 - [TypeScript](https://www.typescriptlang.org/)
-
-- [JSON Server](https://github.com/typicode/json-server)
 
 # Como rodar
 
@@ -84,11 +97,4 @@ $ npm install
 
 # Roda o projeto Next em modo desenvolvimento
 $ npm dev
-
-# Roda o back-end falso
-$ npm server
-
-# Nota: É possivel fazer a build e utilizar o output em um host barato
-# $ npm build
-
 ```

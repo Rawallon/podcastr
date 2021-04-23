@@ -114,7 +114,7 @@ export default function Player() {
             autoPlay
             loop={isLooping}
             ref={audioRef}
-            onEnd={handleEpisodeEnd}
+            onEnded={handleEpisodeEnd}
             onPlay={() => setPlayState(true)}
             onPause={() => setPlayState(false)}
             onLoadedMetadata={setupProgressListener}

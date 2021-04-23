@@ -87,30 +87,29 @@ export const getStaticProps: GetStaticProps = async (ctx) => {
       headers: { 'Content-Type': 'application/json' },
     },
   );
-  const chosenEpisode = Object.values(data.episodes).filter(
-    (ep) => ep.id === slug,
-  );
+  const chosenEpisode: any = Object.values(data.episodes).filter(
+    (ep: any) => ep.id === slug,
+  )[0];
 
   const episode = {
-    id: chosenEpisode[0].id,
-    title: chosenEpisode[0].title,
-    thumbnail: chosenEpisode[0].thumbnail,
-    members: chosenEpisode[0].members,
-    publishedAt: format(parseISO(chosenEpisode[0].published_at), 'd MMM yy', {
+    id: chosenEpisode.id,
+    title: chosenEpisode.title,
+    thumbnail: chosenEpisode.thumbnail,
+    members: chosenEpisode.members,
+    publishedAt: format(parseISO(chosenEpisode.published_at), 'd MMM yy', {
       locale: ptBR,
     }),
-    duration: Number(chosenEpisode[0].file.duration),
+    duration: Number(chosenEpisode.file.duration),
     durationAsString: convertDurationToTimeString(
-      Number(chosenEpisode[0].file.duration),
+      Number(chosenEpisode.file.duration),
     ),
-    description: chosenEpisode[0].description,
-    url: chosenEpisode[0].file.url,
+    description: chosenEpisode.description,
+    url: chosenEpisode.file.url,
   };
 
   return {
     props: {
       episode,
     },
-    revalidate: 60 * 60 * 24, //24 hours
   };
 };

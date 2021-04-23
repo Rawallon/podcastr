@@ -18,11 +18,13 @@ type Episode = {
   thumbnail: string;
   file: string;
   url: string;
-  duration: string;
+  duration: number;
+  durationAsString: string;
 };
 
 type HomeProps = {
-  episodes: Episode[];
+  allEpisodes: Episode[];
+  latestEpisodes: Episode[];
 };
 
 export default function Home({ latestEpisodes, allEpisodes }: HomeProps) {
@@ -129,7 +131,7 @@ export const getStaticProps: GetStaticProps = async () => {
     },
   );
 
-  const episodes = Object.values(data.episodes).map((episode) => {
+  const episodes = Object.values(data.episodes).map((episode: any) => {
     return {
       id: episode.id,
       title: episode.title,
@@ -140,7 +142,10 @@ export const getStaticProps: GetStaticProps = async () => {
       thumbnail: episode.thumbnail,
       file: episode.file,
       url: episode.file.url,
-      duration: episode.file.duration,
+      duration: Number(episode.file.duration),
+      durationAsString: convertDurationToTimeString(
+        Number(episode.file.duration),
+      ),
     };
   });
   const latestEpisodes = episodes.slice(0, 2);
@@ -151,6 +156,5 @@ export const getStaticProps: GetStaticProps = async () => {
       latestEpisodes,
       allEpisodes,
     },
-    revalidate: 60 * 60 * 8,
   };
 };
