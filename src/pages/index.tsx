@@ -1,3 +1,4 @@
+import Head from 'next/head';
 import { GetStaticProps } from 'next';
 import { format, parseISO } from 'date-fns';
 import Image from 'next/image';
@@ -5,10 +6,9 @@ import Link from 'next/link';
 
 import styles from '../styles/home.module.scss';
 import ptBR from 'date-fns/locale/pt-BR';
-import { api } from '../utils/api';
 import { convertDurationToTimeString } from '../utils/convertDurationToTimeString';
-import { PlayerCtx } from '../context/PlayerContext';
-import { useContext } from 'react';
+import { usePlayer } from '../context/PlayerContext';
+import axios from 'axios';
 
 type Episode = {
   id: string;
@@ -26,14 +26,20 @@ type HomeProps = {
 };
 
 export default function Home({ latestEpisodes, allEpisodes }: HomeProps) {
-  const { play } = useContext(PlayerCtx);
+  const { playList } = usePlayer();
+
+  const episodeList = [...latestEpisodes, ...allEpisodes];
   return (
     <div className={styles.homepage}>
+      <Head>
+        <title>Podcastr | Pagina inicial </title>
+      </Head>
+
       <section className={styles.latestEpisodes}>
         <h2>Últimos lançamentos</h2>
 
         <ul>
-          {latestEpisodes.map((episode) => (
+          {latestEpisodes.map((episode, index) => (
             <li key={episode.id}>
               <Image
                 width={192}
@@ -52,7 +58,7 @@ export default function Home({ latestEpisodes, allEpisodes }: HomeProps) {
                 <span>{episode.durationAsString}</span>
               </div>
 
-              <button onClick={() => play(episode)}>
+              <button onClick={() => playList(episodeList, index)}>
                 <img src="/play-green.svg" alt="Tocar episódio" />
               </button>
             </li>
@@ -73,7 +79,7 @@ export default function Home({ latestEpisodes, allEpisodes }: HomeProps) {
           </thead>
 
           <tbody>
-            {allEpisodes.map((episode) => (
+            {allEpisodes.map((episode, index) => (
               <tr key={episode.id}>
                 <td style={{ width: 72 }}>
                   <Image
@@ -93,7 +99,11 @@ export default function Home({ latestEpisodes, allEpisodes }: HomeProps) {
                 <td style={{ width: 100 }}>{episode.publishedAt}</td>
                 <td>{episode.durationAsString}</td>
                 <td>
-                  <button type="button" onClick={() => play(episode)}>
+                  <button
+                    type="button"
+                    onClick={() =>
+                      playList(episodeList, index + latestEpisodes.length)
+                    }>
                     <img src="/play-green.svg" alt="Tocar episódio" />
                   </button>
                 </td>
@@ -107,15 +117,19 @@ export default function Home({ latestEpisodes, allEpisodes }: HomeProps) {
 }
 
 export const getStaticProps: GetStaticProps = async () => {
-  const { data } = await api.get('episodes', {
-    params: {
-      _limit: 12,
-      _sort: 'published_at',
-      _order: 'desc',
+  const { data } = await axios.get(
+    'https://raw.githubusercontent.com/Rawallon/podcastr/main/server.json',
+    {
+      params: {
+        _limit: 12,
+        _sort: 'published_at',
+        _order: 'desc',
+      },
+      headers: { 'Content-Type': 'application/json' },
     },
-  });
+  );
 
-  const episodes = data.map((episode) => {
+  const episodes = Object.values(data.episodes).map((episode) => {
     return {
       id: episode.id,
       title: episode.title,
@@ -126,7 +140,7 @@ export const getStaticProps: GetStaticProps = async () => {
       thumbnail: episode.thumbnail,
       file: episode.file,
       url: episode.file.url,
-      duration: convertDurationToTimeString(Number(episode.file.duration)),
+      duration: episode.file.duration,
     };
   });
   const latestEpisodes = episodes.slice(0, 2);

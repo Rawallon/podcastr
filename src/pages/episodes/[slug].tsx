@@ -1,12 +1,14 @@
+import Head from 'next/head';
 import { format, parseISO } from 'date-fns';
 import { ptBR } from 'date-fns/locale';
 import { GetStaticPaths, GetStaticProps } from 'next';
 import Image from 'next/image';
 import Link from 'next/link';
-import { api } from '../../utils/api';
 import { convertDurationToTimeString } from '../../utils/convertDurationToTimeString';
 
 import styles from '../../styles/episode.module.scss';
+import axios from 'axios';
+import { usePlayer } from '../../context/PlayerContext';
 
 type Episode = {
   id: string;
@@ -25,8 +27,13 @@ type EpisodeProps = {
 };
 
 export default function Episode({ episode }: EpisodeProps) {
+  const { play } = usePlayer();
   return (
     <div className={styles.episode}>
+      <Head>
+        <title> Podcastr | {episode.title} </title>
+      </Head>
+
       <div className={styles.thumbnailContainer}>
         <Link href="/">
           <button>
@@ -40,7 +47,11 @@ export default function Episode({ episode }: EpisodeProps) {
           objectFit="cover"
         />
         <button>
-          <img src="/play.svg" alt="Tocar episódio" />
+          <img
+            src="/play.svg"
+            alt="Tocar episódio"
+            onClick={() => play(episode)}
+          />
         </button>
       </div>
 
@@ -70,21 +81,30 @@ export const getStaticPaths: GetStaticPaths = async () => {
 
 export const getStaticProps: GetStaticProps = async (ctx) => {
   const { slug } = ctx.params;
-
-  const { data } = await api.get(`/episodes/${slug}`);
+  const { data } = await axios.get(
+    'https://raw.githubusercontent.com/Rawallon/podcastr/main/server.json',
+    {
+      headers: { 'Content-Type': 'application/json' },
+    },
+  );
+  const chosenEpisode = Object.values(data.episodes).filter(
+    (ep) => ep.id === slug,
+  );
 
   const episode = {
-    id: data.id,
-    title: data.title,
-    thumbnail: data.thumbnail,
-    members: data.members,
-    publishedAt: format(parseISO(data.published_at), 'd MMM yy', {
+    id: chosenEpisode[0].id,
+    title: chosenEpisode[0].title,
+    thumbnail: chosenEpisode[0].thumbnail,
+    members: chosenEpisode[0].members,
+    publishedAt: format(parseISO(chosenEpisode[0].published_at), 'd MMM yy', {
       locale: ptBR,
     }),
-    duration: Number(data.file.duration),
-    durationAsString: convertDurationToTimeString(Number(data.file.duration)),
-    description: data.description,
-    url: data.file.url,
+    duration: Number(chosenEpisode[0].file.duration),
+    durationAsString: convertDurationToTimeString(
+      Number(chosenEpisode[0].file.duration),
+    ),
+    description: chosenEpisode[0].description,
+    url: chosenEpisode[0].file.url,
   };
 
   return {
