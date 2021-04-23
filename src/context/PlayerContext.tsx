@@ -1,4 +1,10 @@
-import { createContext, ReactNode, useContext, useState } from 'react';
+import {
+  createContext,
+  ReactNode,
+  useContext,
+  useEffect,
+  useState,
+} from 'react';
 
 type Episode = {
   title: string;
@@ -38,15 +44,27 @@ export function PlayerContextProvider({
 }: PlayerContextProviderProps) {
   const [episodeList, setEpisodeList] = useState([]);
   const [currentEpisodeIndex, setCurrentEpisodeIndex] = useState(0);
-  const [isPlaying, setIsPlaying] = useState(true);
+  const [isPlaying, setIsPlaying] = useState(false);
   const [isLooping, setIsLooping] = useState(false);
   const [isShuffling, setIsShuffling] = useState(false);
 
+  useEffect(() => {
+    const locally: Episode = JSON.parse(localStorage.getItem('episode'));
+    if (locally) {
+      setEpisodeList([locally]);
+      setCurrentEpisodeIndex(0);
+      setIsPlaying(false);
+    }
+  }, []);
+
   function play(episode: Episode) {
+    localStorage.setItem('episode', JSON.stringify(episode));
     setEpisodeList([episode]);
     setCurrentEpisodeIndex(0);
+    setIsPlaying(true);
   }
   function playList(list: Episode[], index: number) {
+    localStorage.setItem('episode', JSON.stringify(list[index]));
     setEpisodeList(list);
     setCurrentEpisodeIndex(index);
     setIsPlaying(true);
@@ -83,6 +101,7 @@ export function PlayerContextProvider({
   }
 
   function clearPlayerState() {
+    localStorage.removeItem('episode');
     setEpisodeList([]);
     setCurrentEpisodeIndex(0);
   }
