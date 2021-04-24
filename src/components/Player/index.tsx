@@ -216,7 +216,9 @@ export default function Player() {
               disabled={!episode}
               onClick={() => handleMute()}
               className={isLooping ? styles.isActive : ''}>
-              <img src="/volume.svg" alt="Repetir" />
+                {audioVolume >= 70 ? <img src="/high-volume.svg" alt="Volume" /> : ''}
+                {audioVolume < 70 && audioVolume >= 25 ? <img src="/medium-volume.svg" alt="Volume" /> : ''}
+                {audioVolume < 25 ? <img src="/low-volume.svg" alt="Volume" /> : ''}
             </button>
           </div>
         </div>
