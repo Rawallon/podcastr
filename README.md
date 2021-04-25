@@ -4,7 +4,7 @@
 
 # About
 
-Essa Aplicação tem o proposito de servir como App/site de uma produtora de Podcasts, onde eles ficarão disponíveis para serem escutados e também será possivel acessar as notas dos episodios.
+Essa Aplicação tem o proposito de servir como App/site de uma produtora de Podcasts, onde eles ficarão disponíveis para serem escutados e também será possivel acessar as notas dos episódios.
 
 Esta projeto foi desenvolvido durante o evento NLW#05 - Trilha de React da <a href="https://rocketseat.com.br"> Rocketseat </a>.
 
@@ -36,7 +36,7 @@ Esta projeto foi desenvolvido durante o evento NLW#05 - Trilha de React da <a hr
   <img src="./.readme/second-mobile.png" height="400px">
 </p>
 
-# Funcionanlidades implementadas pós-NLW
+# Funcionalidades implementadas pós-NLW
 
 - [x] Responsividade
 - [x] PWA (site que funciona como app)
