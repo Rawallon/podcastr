@@ -28,9 +28,23 @@ type HomeProps = {
 };
 
 export default function Home({ latestEpisodes, allEpisodes }: HomeProps) {
-  const { playList } = usePlayer();
+  const {
+    playList,
+    isPlaying,
+    currentEpisodeIndex,
+    setPlayState,
+  } = usePlayer();
 
   const episodeList = [...latestEpisodes, ...allEpisodes];
+
+  function handlePlayButton(episodeList, index) {
+    if (isPlaying && currentEpisodeIndex === index) {
+      setPlayState(false);
+      return;
+    }
+
+    playList(episodeList, index);
+  }
   return (
     <div className={styles.homepage}>
       <Head>
@@ -60,8 +74,12 @@ export default function Home({ latestEpisodes, allEpisodes }: HomeProps) {
                 <span>{episode.durationAsString}</span>
               </div>
 
-              <button onClick={() => playList(episodeList, index)}>
-                <img src="/play-green.svg" alt="Tocar episódio" />
+              <button onClick={() => handlePlayButton(episodeList, index)}>
+                {isPlaying && currentEpisodeIndex == index ? (
+                  <img src="/pause-green.svg" alt="Tocar episódio" />
+                ) : (
+                  <img src="/play-green.svg" alt="Tocar episódio" />
+                )}
               </button>
             </li>
           ))}
@@ -104,9 +122,17 @@ export default function Home({ latestEpisodes, allEpisodes }: HomeProps) {
                   <button
                     type="button"
                     onClick={() =>
-                      playList(episodeList, index + latestEpisodes.length)
+                      handlePlayButton(
+                        episodeList,
+                        index + latestEpisodes.length,
+                      )
                     }>
-                    <img src="/play-green.svg" alt="Tocar episódio" />
+                    {isPlaying &&
+                    currentEpisodeIndex == index + latestEpisodes.length ? (
+                      <img src="/pause-green.svg" alt="Tocar episódio" />
+                    ) : (
+                      <img src="/play-green.svg" alt="Tocar episódio" />
+                    )}
                   </button>
                 </td>
               </tr>
