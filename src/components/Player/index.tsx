@@ -41,6 +41,7 @@ export default function Player() {
         setAudioVolume(Number(storageVolume));
       }
       document.addEventListener('keydown', (e) => {
+        e.preventDefault();
         if (e.code === 'Space') {
           if (audioRef.current.paused) {
             audioRef.current.play();
