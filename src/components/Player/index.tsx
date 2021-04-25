@@ -29,7 +29,7 @@ export default function Player() {
 
   const audioRef = useRef<HTMLAudioElement>(null);
   const [progress, setProgress] = useState(0);
-  const [isVolumeOpen, setIsVolumeOpen] = useState(false);
+  const [isVolumeOpen, setIsVolumeOpen] = useState(true);
   const [audioVolume, setAudioVolume] = useState(50);
   const [muteAudioVolume, setMuteAudioVolume] = useState(0);
 
@@ -212,8 +212,16 @@ export default function Player() {
               max={100}
               value={audioVolume}
               onChange={handleChangeVolume}
-              trackStyle={{ backgroundColor: '#04d361', width: '50%' }}
-              railStyle={{ backgroundColor: '#9f75ff', width: '50%' }}
+              trackStyle={{
+                backgroundColor: '#04d361',
+                width: '20%',
+                left: '50%',
+              }}
+              railStyle={{
+                backgroundColor: '#9f75ff',
+                width: '20%',
+                left: '50%',
+              }}
               handleStyle={{
                 backgroundColor: '#04d361',
                 borderWidth: 4,
