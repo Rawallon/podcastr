@@ -25,11 +25,21 @@ export function ThemeContextProvider({ children }: ThemeContextProviderProps) {
     if (locally) {
       setIsDarkMode(locally);
     }
+    if (typeof window !== 'undefined') {
+      if (locally) {
+        document.body.classList.add('nightly');
+      }
+    }
   }, []);
 
   function toggleDarkMode() {
     localStorage.setItem('theme', JSON.stringify(!isDarkMode));
     setIsDarkMode(!isDarkMode);
+    if (!isDarkMode) {
+      document.body.classList.add('nightly');
+    } else {
+      document.body.classList.remove('nightly');
+    }
   }
   return (
     <ThemeCtx.Provider
@@ -37,7 +47,7 @@ export function ThemeContextProvider({ children }: ThemeContextProviderProps) {
         isDarkMode,
         toggleDarkMode,
       }}>
-      <div className={`${isDarkMode ? 'nightly' : ''}`}>{children}</div>
+      {children}
     </ThemeCtx.Provider>
   );
 }

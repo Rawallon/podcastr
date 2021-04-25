@@ -40,10 +40,6 @@
   --purple-800: #6f48c9;
 }
 
-main {
-  background: var(--white-bg);
-}
-
 * {
   margin: 0;
   padding: 0;
@@ -62,16 +58,13 @@ main {
   }
 }
 
-body {
-  background: var(--gray-50);
-}
-
 body,
 input,
 textarea,
 button {
   font: 500 1rem Inter, sans-serif;
   color: var(--gray-500);
+  background: var(--white-bg);
 }
 
 h1,
