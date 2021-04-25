@@ -5,10 +5,12 @@ import { GetStaticPaths, GetStaticProps } from 'next';
 import Image from 'next/image';
 import Link from 'next/link';
 import { convertDurationToTimeString } from '../../utils/convertDurationToTimeString';
+import { useRouter } from 'next/router';
 
 import styles from '../../styles/episode.module.scss';
 import axios from 'axios';
 import { usePlayer } from '../../context/PlayerContext';
+import { useEffect, useState } from 'react';
 
 type Episode = {
   id: string;
@@ -27,13 +29,38 @@ type EpisodeProps = {
 };
 
 export default function Episode({ episode }: EpisodeProps) {
-  const { play } = usePlayer();
+  const {
+    play,
+    setPlayState,
+    isPlaying,
+    episodeList,
+    currentEpisodeIndex,
+  } = usePlayer();
+  const [isBeingPlayed, setIsBeingPlayed] = useState(false);
+
+  const router = useRouter();
+  useEffect(() => {
+    if (isPlaying) {
+      console.log(
+        episodeList[currentEpisodeIndex].id === router.query.slug,
+        'asd',
+      );
+      if (episodeList[currentEpisodeIndex].id === router.query.slug) {
+        setIsBeingPlayed(true);
+      } else {
+        setIsBeingPlayed(false);
+      }
+    } else {
+      setIsBeingPlayed(false);
+    }
+  }, [isPlaying, episodeList, currentEpisodeIndex, router]);
+  console.log();
+
   return (
     <div className={styles.episode}>
       <Head>
         <title> Podcastr | {episode.title} </title>
       </Head>
-
       <div className={styles.thumbnailContainer}>
         <Link href="/">
           <button>
@@ -46,15 +73,19 @@ export default function Episode({ episode }: EpisodeProps) {
           src={episode.thumbnail}
           objectFit="cover"
         />
-        <button>
-          <img
-            src="/play.svg"
-            alt="Tocar episódio"
-            onClick={() => play(episode)}
-          />
+
+        <button type="button">
+          {isBeingPlayed ? (
+            <img
+              src="/pause.svg"
+              alt="Pausar"
+              onClick={() => setPlayState(false)}
+            />
+          ) : (
+            <img src="/play.svg" alt="Tocar" onClick={() => play(episode)} />
+          )}
         </button>
       </div>
-
       <header>
         <h1>{episode.title}</h1>
         <span>{episode.members}</span>
