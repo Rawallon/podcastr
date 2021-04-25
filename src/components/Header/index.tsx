@@ -20,7 +20,11 @@ export default function Header() {
       <p>O melhor para você ouvir,sempre</p>
       <span onClick={toggleDarkMode}>
         <div className={styles.button}>
-          {isDarkMode ? <img src="/sun.svg" /> : <img src="/moon.svg" />}
+          {isDarkMode ? (
+            <img src="/sun.svg" loading="eager" />
+          ) : (
+            <img src="/moon.svg" loading="eager" />
+          )}
         </div>
       </span>
     </div>

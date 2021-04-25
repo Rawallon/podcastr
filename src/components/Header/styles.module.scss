@@ -29,8 +29,23 @@
 }
 
 .button {
-  padding: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 3rem;
+  height: 3rem;
   background: var(--gray-100);
-  padding: 0.5rem;
-  border-radius: 1.5rem;
+  border: 1px solid var(--gray-800);
+  border-radius: 0.675rem;
+  font-size: 0;
+  transition: all 0.3s;
+
+  &:hover {
+    background: var(--gray-500);
+  }
+
+  &:active {
+    background: var(--gray-800);
+  }
 }
