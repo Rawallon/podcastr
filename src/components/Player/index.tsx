@@ -89,12 +89,13 @@ export default function Player() {
     setAudioVolume(amount);
   }
   function handleMute() {
-    if (!isMuted) {
+    if (!muteAudioVolume) {
       setMuteAudioVolume(audioVolume);
       audioRef.current.volume = 0;
       setAudioVolume(0);
+      return;
     }
-
+    setMuteAudioVolume(0);
     handleChangeVolume(muteAudioVolume);
   }
   return (
