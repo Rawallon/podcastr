@@ -29,7 +29,7 @@ export default function Player() {
 
   const audioRef = useRef<HTMLAudioElement>(null);
   const [progress, setProgress] = useState(0);
-  const [isVolumeOpen, setIsVolumeOpen] = useState(true);
+  const [isVolumeOpen, setIsVolumeOpen] = useState(false);
   const [audioVolume, setAudioVolume] = useState(50);
   const [muteAudioVolume, setMuteAudioVolume] = useState(0);
 
