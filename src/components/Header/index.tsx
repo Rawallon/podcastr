@@ -6,7 +6,6 @@ import styles from './styles.module.scss';
 
 export default function Header() {
   const { isDarkMode, toggleDarkMode } = useTheme();
-  console.log(isDarkMode);
 
   const currentDate = format(new Date(), 'EEEEEE, d, MMM', {
     locale: ptBR,

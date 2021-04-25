@@ -9,22 +9,6 @@ import { convertDurationToTimeString } from '../../utils/convertDurationToTimeSt
 import styles from './styles.module.scss';
 
 export default function Player() {
-  const audioRef = useRef<HTMLAudioElement>(null);
-  const [progress, setProgress] = useState(0);
-  const [isVolumeOpen, setIsVolumeOpen] = useState(false);
-  const [audioVolume, setAudioVolume] = useState(50);
-  const [muteAudioVolume, setMuteAudioVolume] = useState(0);
-  const [isMuted, setIsMuted] = useState(false);
-
-  useEffect(() => {
-    if (typeof window !== 'undefined') {
-      const storageVolume = localStorage.getItem('audioVolume');
-      if (storageVolume) {
-        setAudioVolume(Number(storageVolume));
-      }
-    }
-  }, []);
-
   const {
     episodeList,
     currentEpisodeIndex,
@@ -41,18 +25,42 @@ export default function Player() {
     isShuffling,
     clearPlayerState,
   } = usePlayer();
-
   const episode = episodeList[currentEpisodeIndex];
+
+  const audioRef = useRef<HTMLAudioElement>(null);
+  const [progress, setProgress] = useState(0);
+  const [isVolumeOpen, setIsVolumeOpen] = useState(false);
+  const [audioVolume, setAudioVolume] = useState(50);
+  const [muteAudioVolume, setMuteAudioVolume] = useState(0);
+
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      const storageVolume = localStorage.getItem('audioVolume');
+      if (storageVolume) {
+        setAudioVolume(Number(storageVolume));
+      }
+      document.addEventListener('keydown', (e) => {
+        if (e.code === 'Space') {
+          if (audioRef.current.paused) {
+            audioRef.current.play();
+          } else {
+            audioRef.current.pause();
+          }
+        }
+      });
+    }
+  }, []);
 
   useEffect(() => {
     if (!audioRef.current) return;
+    audioRef.current.volume = Number(audioVolume) / 100;
 
     if (isPlaying) {
       audioRef.current.play();
     } else {
       audioRef.current.pause();
     }
-  }, [isPlaying]);
+  }, [isPlaying, audioVolume, episodeList]);
 
   function setupProgressListener() {
     audioRef.current.currentTime = 0;
@@ -216,9 +224,21 @@ export default function Player() {
               disabled={!episode}
               onClick={() => handleMute()}
               className={isLooping ? styles.isActive : ''}>
-                {audioVolume >= 70 ? <img src="/high-volume.svg" alt="Volume" /> : ''}
-                {audioVolume < 70 && audioVolume >= 25 ? <img src="/medium-volume.svg" alt="Volume" /> : ''}
-                {audioVolume < 25 ? <img src="/low-volume.svg" alt="Volume" /> : ''}
+              {audioVolume >= 70 ? (
+                <img src="/high-volume.svg" alt="Volume" loading="eager" />
+              ) : (
+                ''
+              )}
+              {audioVolume < 70 && audioVolume >= 25 ? (
+                <img src="/medium-volume.svg" alt="Volume" loading="eager" />
+              ) : (
+                ''
+              )}
+              {audioVolume < 25 ? (
+                <img src="/low-volume.svg" alt="Volume" loading="eager" />
+              ) : (
+                ''
+              )}
             </button>
           </div>
         </div>
