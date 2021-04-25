@@ -9,6 +9,12 @@
 
   border-bottom: var(--border-pixel) solid var(--gray-100);
   box-shadow: rgb(18 18 20) 0px 1rem 2rem;
+
+  @media (max-width: 992px) {
+    p {
+      display: none;
+    }
+  }
   p {
     color: var(--gray-500);
     margin-left: 2rem;

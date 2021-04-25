@@ -1,6 +1,23 @@
+.playerWrapper {
+  position: sticky;
+  top: 0;
+  @media (max-width: 992px) {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 1px;
+  }
+}
+
 .playerContainer {
+  z-index: 2;
+  position: sticky;
+  top: 0;
+
   padding: 3rem 4rem;
-  width: 26.5rem;
+  width: 90vw;
+  max-width: 26.5rem;
   height: 100vh;
 
   background: var(--purple-500);
@@ -10,6 +27,14 @@
   flex-direction: column;
   align-items: center;
   justify-content: space-between;
+  transition: right 0.7s ease;
+
+  @media (max-width: 992px) {
+    position: fixed;
+    top: 0;
+    right: -100%;
+    box-shadow: rgba(0, 0, 0, 0.4) 0px 1rem 2rem;
+  }
 
   header {
     display: flex;
@@ -31,9 +56,59 @@
   }
 }
 
+.isVisible {
+  right: 0;
+}
+
+.showPlayerButton {
+  display: none;
+  @media (max-width: 992px) {
+    display: block;
+    background: var(--gray-500);
+    width: 50px;
+    height: 50px;
+    position: absolute;
+    top: 6.5rem;
+    right: 0;
+    border-radius: 10px 0 0 10px;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    img {
+      width: 24px;
+      height: 24px;
+    }
+    z-index: 1;
+  }
+  // transform: translateX(-100px);
+}
+
+.showPlayerButtonOpen {
+  display: none;
+  @media (max-width: 992px) {
+    display: block;
+    background: var(--gray-500);
+    width: 50px;
+    height: 50px;
+    position: absolute;
+    top: 6.5rem;
+    left: -50px;
+    border-radius: 10px 0 0 10px;
+    z-index: 0;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    img {
+      width: 24px;
+      height: 24px;
+    }
+  }
+  // transform: translateX(-100px);
+}
 .currentEpisode {
   text-align: center;
-
   img {
     border-radius: 1.5rem;
   }
@@ -156,9 +231,13 @@
     transition: display 2s;
   }
   .visible {
-    display: none;
+    display: block;
   }
   .hidden {
-    display: block;
+    display: none;
+  }
+
+  @media (max-width: 992px) {
+    display: block !important;
   }
 }
