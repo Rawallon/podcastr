@@ -8,6 +8,12 @@ Essa Aplicação tem o proposito de servir como App/site de uma produtora de Pod
 
 Esta projeto foi desenvolvido durante o evento NLW#05 - Trilha de React da <a href="https://rocketseat.com.br"> Rocketseat </a>.
 
+# Live Demo
+
+<a title="Deployed with vercel" href="https://podcastr-rawallon.vercel.app/">
+<img alt="Deployed with vercel" src="https://img.shields.io/badge/Deployed%20with%20Vercel-%230070f3?style=plastic&logo=vercel&logoColor=white" width="200px" />
+</a>
+
 # Layout
 
 <p align="center">
@@ -16,14 +22,29 @@ Esta projeto foi desenvolvido durante o evento NLW#05 - Trilha de React da <a hr
     </a>
 </p>
 
-<img src="./.readme/first.png" width="400px">
-<img src="./.readme/second.png" width="400px">
+### Desktop
 
-# Live Demo
+<p float="left">
+  <img src="./.readme/first.png" width="400px">
+  <img src="./.readme/second.png" width="400px">
+</p>
 
-<a title="Deployed with vercel" href="https://podcastr-rawallon.vercel.app/">
-<img alt="Deployed with vercel" src="https://img.shields.io/badge/Deployed%20with%20Vercel-%230070f3?style=plastic&logo=vercel&logoColor=white" width="200px" />
-</a>
+### Mobile
+
+<p float="left">
+  <img src="./.readme/first-mobile.png" height="400px">
+  <img src="./.readme/second-mobile.png" height="400px">
+</p>
+
+# Funcionanlidades implementadas pós-NLW
+
+- [x] Responsividade
+- [x] PWA (site que funciona como app)
+- [x] Salvar sessão no localStorage
+- [x] Barrade volume (e opção de mutar)
+- [x] Modo noturno
+- [x] Spaço funciona como botão de play
+- [x] Todos botões da play no site funcionam também como pause
 
 # Conteudo técnico apresentado
 
