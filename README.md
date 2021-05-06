@@ -29,6 +29,13 @@ Esta projeto foi desenvolvido durante o evento NLW#05 - Trilha de React da <a hr
   <img src="./.readme/second.png" width="400px">
 </p>
 
+### Tablet
+
+<p float="left">
+  <img src="./.readme/first-tablet.png" height="400px">
+  <img src="./.readme/second-tablet.png" height="400px">
+</p>
+
 ### Mobile
 
 <p float="left">
